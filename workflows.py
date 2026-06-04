@@ -1,5 +1,13 @@
 from temporalio import activity, workflow
+from pydantic import BaseModel
 
+from datetime import timedelta
+
+
+class HelloWorkflowInput(BaseModel):
+    name: str
+    client_id: str
+    request_id: str
 
 @activity.defn
 async def say_hello(name: str) -> str:
@@ -14,10 +22,20 @@ async def say_morning(name: str) -> str:
 class HelloWorkflow:
 
     @workflow.run
-    async def run(self, name: str) -> str:
+    async def run(
+        self,
+        workflow_input: HelloWorkflowInput,
+    ) -> str:
+
+        workflow.logger.info(
+            f"request_id={workflow_input.request_id} "
+            f"client_id={workflow_input.client_id} "
+            f"name={workflow_input.name}"
+        )
+
         result = await workflow.execute_activity(
             say_hello,
-            name,
+            workflow_input.name,
             start_to_close_timeout=timedelta(seconds=10),
         )
 

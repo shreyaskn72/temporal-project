@@ -8,10 +8,15 @@ from pydantic import BaseModel
 from temporalio.client import Client
 from temporalio.service import RPCError
 
-from workflows import HelloWorkflow, GoodMorning
+from workflows import HelloWorkflow, GoodMorning,  HelloWorkflowInput
 
 app = FastAPI()
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 class HelloRequest(BaseModel):
     name: str
@@ -35,16 +40,29 @@ async def trigger_hello_workflow(
 
     workflow_id = f"hello-{uuid.uuid4()}"
 
-    print(
-        f"Workflow requested "
-        f"client={x_client_id} "
-        f"workflow_id={workflow_id} "
-        f"name={request.name}"
+    request_id = str(uuid.uuid4())
+
+    workflow_input = HelloWorkflowInput(
+        name=request.name,
+        client_id=x_client_id,
+        request_id=request_id,
+    )
+
+    # AUDIT LOG
+    logger.info(
+        {
+            "event": "workflow_start_requested",
+            "workflow_type": "HelloWorkflow",
+            "workflow_id": workflow_id,
+            "request_id": request_id,
+            "client_id": x_client_id,
+            "name": request.name,
+        }
     )
 
     handle = await app.state.temporal_client.start_workflow(
         HelloWorkflow.run,
-        request.name,
+        workflow_input,
         id=workflow_id,
         task_queue="hello-task-queue",
     )
@@ -53,11 +71,12 @@ async def trigger_hello_workflow(
         "status": "STARTED",
         "workflow_id": handle.id,
         "run_id": handle.result_run_id,
+        "request_id": request_id,
         "client_id": x_client_id,
     }
 
 
-@app.get("/workflows/{workflow_id}")
+@app.get("/workflows/status/{workflow_id}")
 async def get_workflow_status(workflow_id: str):
 
     client = app.state.temporal_client

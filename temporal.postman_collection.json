@@ -1,0 +1,100 @@
+{
+  "info": {
+    "_postman_id": "749cee9b-1ddb-453f-9843-6e96b6977cca",
+    "name": "temporal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55042815",
+    "_collection_link": "https://go.postman.co/collection/55042815-749cee9b-1ddb-453f-9843-6e96b6977cca?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8000/workflows/hello",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n        \"name\":\"Shreyas\"\n      }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/workflows/hello",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "workflows",
+            "hello"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8000/workflows/morning",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n        \"name\":\"Nagesh\"\n      }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/workflows/morning",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "workflows",
+            "morning"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "workflows",
+            "status",
+            "hello-a567d397-80c2-4e8a-903a-3af86661f737"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
