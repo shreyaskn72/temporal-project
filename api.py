@@ -82,31 +82,25 @@ async def trigger_hello_workflow(
     }
 
 
-@app.get("/workflows/status/{workflow_id}")
-async def get_workflow_status(workflow_id: str):
+@app.get("/workflows/status/{customer}/{workflow_id}")
+async def get_status(customer: str, workflow_id: str):
 
-    client = app.state.temporal_client
+    if customer == "customer-a":
+        client = app.state.customer_a_client
+    elif customer == "customer-b":
+        client = app.state.customer_b_client
+    else:
+        raise HTTPException(400, "Unknown customer")
 
-    try:
+    handle = client.get_workflow_handle(workflow_id)
 
-        handle = client.get_workflow_handle(workflow_id)
+    description = await handle.describe()
 
-        description = await handle.describe()
-
-        return {
-            "workflow_id": workflow_id,
-            "run_id": description.run_id,
-            "workflow_type": description.workflow_type,
-            "status": description.status.name,
-            "start_time": description.start_time,
-            "close_time": description.close_time,
-        }
-
-    except RPCError:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Workflow '{workflow_id}' not found"
-        )
+    return {
+        "customer": customer,
+        "workflow_id": workflow_id,
+        "status": description.status.name,
+    }
 
 
 @app.post("/workflows/morning")
