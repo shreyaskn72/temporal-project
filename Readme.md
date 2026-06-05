@@ -27,6 +27,7 @@ A simple Temporal workflow example using:
 ├── workflows.py
 ├── worker.py
 └── run_workflow.py
+└──  api.py
 ```
 
 ---
@@ -160,6 +161,70 @@ You should see:
 
 ---
 
+## run by api
+
+open terminal where api.py file exists run
+```bash
+uvicorn api:app --reload
+```
+
+Import postman collection attached to your postman to trigger apis.
+
+### curl equivalent commands:
+```bash
+curl -X POST \
+  http://localhost:8000/workflows/hello \
+  -H "Content-Type: application/json" \
+  -H "x-client-id: customer-a" \
+  -d '{
+        "name":"Shreyas"
+      }'
+
+```
+
+Response is:
+```bash
+{
+  "status": "STARTED",
+  "workflow_id": "hello-cf7af93b-d47d-4e8a-9658-3fb863a9d457",
+  "run_id": "e5dfd3a2-5a3f-41f5-8d43-9f7cfd0f74e4",
+  "request_id": "7f44f4b7-11e2-48d5-b659-c8cb12cc8f0e",
+  "client_id": "customer-a"
+}
+```
+
+### status api curl:
+```curl
+curl http://localhost:8000/workflows/status/<workflow-id>
+```
+Example would be:
+```curl
+curl \
+http://localhost:8000/workflows/status/hello-1e8a8a22-f1e7-4e4f-8a83-c4f9a8c8c4c2
+```
+
+Response while running:
+```json
+{
+  "workflow_id": "hello-...",
+  "run_id": "...",
+  "workflow_type": "HelloWorkflow",
+  "status": "RUNNING",
+  "start_time": "2026-06-04T10:15:00Z",
+  "close_time": null
+}
+```
+Response after completion:
+```json
+{
+  "workflow_id": "hello-...",
+  "run_id": "...",
+  "workflow_type": "HelloWorkflow",
+  "status": "COMPLETED",
+  "start_time": "2026-06-04T10:15:00Z",
+  "close_time": "2026-06-04T10:15:01Z"
+}
+```
 ## Useful Commands
 
 ### View Temporal Logs
