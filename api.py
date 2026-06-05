@@ -24,8 +24,14 @@ class HelloRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup():
-    app.state.temporal_client = await Client.connect(
-        "localhost:7233"
+    app.state.customer_a_client = await Client.connect(
+        "localhost:7233",
+        namespace="customer-a"
+    )
+
+    app.state.customer_b_client = await Client.connect(
+        "localhost:7233",
+        namespace="customer-b"
     )
 
 
@@ -60,7 +66,7 @@ async def trigger_hello_workflow(
         }
     )
 
-    handle = await app.state.temporal_client.start_workflow(
+    handle = await app.state.customer_a_client.start_workflow(
         HelloWorkflow.run,
         workflow_input,
         id=workflow_id,
@@ -108,7 +114,7 @@ async def trigger_morning(request: HelloRequest):
 
     workflow_id = f"morning-{uuid.uuid4()}"
 
-    handle = await app.state.temporal_client.start_workflow(
+    handle = await app.state.customer_b_client.start_workflow(
         GoodMorning.run_morning,
         request.name,
         id=workflow_id,
