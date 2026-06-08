@@ -102,7 +102,11 @@ async def get_status(customer: str, workflow_id: str):
         return {
             "customer": customer,
             "workflow_id": workflow_id,
+            "run_id": description.run_id,
+            "workflow_type": description.workflow_type,
             "status": description.status.name,
+            "start_time": description.start_time,
+            "close_time": description.close_time,
         }
 
     except Exception as e:
@@ -141,8 +145,13 @@ async def get_workflow_status(workflow_id: str):
 
             return {
                 "namespace": namespace,
+                "customer": namespace,
                 "workflow_id": workflow_id,
+                "run_id": description.run_id,
+                "workflow_type": description.workflow_type,
                 "status": description.status.name,
+                "start_time": description.start_time,
+                "close_time": description.close_time,
             }
 
         except Exception:
