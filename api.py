@@ -27,6 +27,31 @@ NAMESPACES = [
     "customer-b",
 ]
 
+WORKFLOW_PERMISSIONS = {
+    "HelloWorkflow": ["client-a"],
+    "GoodMorningWorkflow": ["client-b"],
+}
+
+def validate_workflow_access(
+    client_id: str,
+    workflow_name: str
+):
+
+    allowed_clients = WORKFLOW_PERMISSIONS.get(
+        workflow_name,
+        []
+    )
+
+    if client_id not in allowed_clients:
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                f"Client '{client_id}' "
+                f"is not allowed to trigger "
+                f"'{workflow_name}'"
+            )
+        )
+
 @app.on_event("startup")
 async def startup():
 
@@ -46,6 +71,11 @@ async def trigger_hello_workflow(
     request: HelloRequest,
     x_client_id: str = Header(...)
 ):
+    validate_workflow_access(
+        x_client_id,
+        "HelloWorkflow"
+    )
+
     """
     Start HelloWorkflow
     """
@@ -115,7 +145,8 @@ async def get_status(customer: str, workflow_id: str):
 
 
 @app.post("/workflows/morning")
-async def trigger_morning(request: HelloRequest):
+async def trigger_morning(request: HelloRequest,
+                          x_client_id: str = Header(...)):
 
     workflow_id = f"morning-{uuid.uuid4()}"
 
