@@ -54,6 +54,38 @@ temporal-postgres
 temporal-ui
 ```
 
+## Step 1: Create Namespaces
+
+```bash
+docker exec -it temporal-admin-tools bash
+```
+
+```bash
+temporal operator namespace create --namespace customer-a
+temporal operator namespace create --namespace customer-b
+```
+
+Verify:
+
+```bash
+temporal operator namespace list
+```
+
+Output:
+
+```text
+default
+customer-a
+customer-b
+```
+
+After creating namespace exit from  temporal-admin-tools bash using exit
+```bash
+exit
+```
+
+---
+
 Open Temporal UI:
 
 ```text
@@ -113,7 +145,8 @@ python worker.py
 Expected output:
 
 ```text
-Worker started...
+Hello Worker started...
+Morning Worker started...
 ```
 
 Leave this terminal running.
