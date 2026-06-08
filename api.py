@@ -192,3 +192,110 @@ async def get_workflow_status(workflow_id: str):
         status_code=404,
         detail="Workflow not found"
     )
+
+
+@app.post(
+    "/workflows/{workflow_id}/approve"
+)
+async def approve_workflow(
+    workflow_id: str
+):
+
+    for namespace, client in (
+        app.state.namespace_clients.items()
+    ):
+
+        try:
+
+            handle = client.get_workflow_handle(
+                workflow_id
+            )
+
+            await handle.signal(
+                HelloWorkflow.approve
+            )
+
+            return {
+                "status": "APPROVED",
+                "workflow_id": workflow_id,
+                "namespace": namespace,
+            }
+
+        except Exception:
+            pass
+
+    raise HTTPException(
+        status_code=404,
+        detail="Workflow not found"
+    )
+
+@app.post(
+    "/workflows/{workflow_id}/reject"
+)
+async def reject_workflow(
+    workflow_id: str
+):
+
+    for namespace, client in (
+        app.state.namespace_clients.items()
+    ):
+
+        try:
+
+            handle = client.get_workflow_handle(
+                workflow_id
+            )
+
+            await handle.signal(
+                HelloWorkflow.reject
+            )
+
+            return {
+                "status": "REJECTED",
+                "workflow_id": workflow_id,
+                "namespace": namespace,
+            }
+
+        except Exception:
+            pass
+
+    raise HTTPException(
+        status_code=404,
+        detail="Workflow not found"
+    )
+
+
+@app.get(
+    "/workflows/{workflow_id}/approval-status"
+)
+async def approval_status(
+    workflow_id: str
+):
+
+    for namespace, client in (
+        app.state.namespace_clients.items()
+    ):
+
+        try:
+
+            handle = client.get_workflow_handle(
+                workflow_id
+            )
+
+            status = await handle.query(
+                HelloWorkflow.get_status
+            )
+
+            return {
+                "workflow_id": workflow_id,
+                "namespace": namespace,
+                "approval_state": status,
+            }
+
+        except Exception:
+            pass
+
+    raise HTTPException(
+        status_code=404,
+        detail="Workflow not found"
+    )

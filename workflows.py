@@ -18,7 +18,7 @@ async def say_hello(name: str) -> str:
         f"Executing say_hello for {name}"
     )
 
-    raise Exception("Simulated Failure")
+    #raise Exception("Simulated Failure")
 
     return f"Hello {name} from Temporal!"
 
@@ -29,6 +29,24 @@ async def say_morning(name: str) -> str:
 
 @workflow.defn
 class HelloWorkflow:
+
+    def __init__(self):
+        self.decision = None
+
+    @workflow.signal
+    async def approve(self):
+        self.decision = "APPROVED"
+
+    @workflow.signal
+    async def reject(self):
+        self.decision = "REJECTED"
+
+    @workflow.query
+    def get_status(self):
+        if self.decision is None:
+            return "WAITING_FOR_APPROVAL"
+
+        return self.decision
 
     @workflow.run
     async def run(
@@ -43,6 +61,28 @@ class HelloWorkflow:
             f"name={workflow_input.name}"
         )
 
+        try:
+
+            await workflow.wait_condition(
+                lambda: self.decision is not None,
+                timeout=timedelta(hours=24),
+            )
+
+        except TimeoutError:
+
+            self.decision = "TIMEOUT"
+
+            return {
+                "status": "TIMEOUT",
+                "message": "Approval not received"
+            }
+
+        if self.decision == "REJECTED":
+            return {
+                "status": "REJECTED",
+                "message": "Rejected by approver"
+            }
+
         result = await workflow.execute_activity(
             say_hello,
             workflow_input.name,
@@ -56,7 +96,12 @@ class HelloWorkflow:
             ),
         )
 
-        return result
+        return {
+            "status": "APPROVED",
+            "message": result,
+        }
+        #return result
+
 
 
 @workflow.defn
