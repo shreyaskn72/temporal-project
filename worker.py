@@ -4,7 +4,12 @@ from temporalio.client import Client
 from temporalio.worker import Worker
 
 from workflows import HelloWorkflow, say_hello, GoodMorning, say_morning
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s"
+)
 
 async def main():
     hello_client = await Client.connect(
