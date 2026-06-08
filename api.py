@@ -22,17 +22,23 @@ class HelloRequest(BaseModel):
     name: str
 
 
+NAMESPACES = [
+    "customer-a",
+    "customer-b",
+]
+
 @app.on_event("startup")
 async def startup():
-    app.state.customer_a_client = await Client.connect(
-        "localhost:7233",
-        namespace="customer-a"
-    )
 
-    app.state.customer_b_client = await Client.connect(
-        "localhost:7233",
-        namespace="customer-b"
-    )
+    app.state.namespace_clients = {}
+
+    for namespace in NAMESPACES:
+        app.state.namespace_clients[namespace] = (
+            await Client.connect(
+                "localhost:7233",
+                namespace=namespace
+            )
+        )
 
 
 @app.post("/workflows/hello")
@@ -66,7 +72,7 @@ async def trigger_hello_workflow(
         }
     )
 
-    handle = await app.state.customer_a_client.start_workflow(
+    handle = await app.state.namespace_clients["customer-a"].start_workflow(
         HelloWorkflow.run,
         workflow_input,
         id=workflow_id,
@@ -85,22 +91,23 @@ async def trigger_hello_workflow(
 @app.get("/workflows/status/{customer}/{workflow_id}")
 async def get_status(customer: str, workflow_id: str):
 
-    if customer == "customer-a":
-        client = app.state.customer_a_client
-    elif customer == "customer-b":
-        client = app.state.customer_b_client
-    else:
-        raise HTTPException(400, "Unknown customer")
+    if customer not in NAMESPACES:
+        return {"message": "customer not found"}
 
-    handle = client.get_workflow_handle(workflow_id)
+    handle = app.state.namespace_clients[customer].get_workflow_handle(workflow_id)
 
-    description = await handle.describe()
+    try:
+        description = await handle.describe()
 
-    return {
-        "customer": customer,
-        "workflow_id": workflow_id,
-        "status": description.status.name,
-    }
+        return {
+            "customer": customer,
+            "workflow_id": workflow_id,
+            "status": description.status.name,
+        }
+
+    except Exception as e:
+        return {"message": str(e)}
+
 
 
 @app.post("/workflows/morning")
@@ -108,7 +115,7 @@ async def trigger_morning(request: HelloRequest):
 
     workflow_id = f"morning-{uuid.uuid4()}"
 
-    handle = await app.state.customer_b_client.start_workflow(
+    handle = await app.state.namespace_clients["customer-b"].start_workflow(
         GoodMorning.run_morning,
         request.name,
         id=workflow_id,
@@ -120,3 +127,28 @@ async def trigger_morning(request: HelloRequest):
         "workflow_id": handle.id,
         "run_id": handle.result_run_id,
     }
+
+# universal status api for all namespaces
+@app.get("/workflows/status/{workflow_id}")
+async def get_workflow_status(workflow_id: str):
+
+    for namespace, client in app.state.namespace_clients.items():
+
+        try:
+            handle = client.get_workflow_handle(workflow_id)
+
+            description = await handle.describe()
+
+            return {
+                "namespace": namespace,
+                "workflow_id": workflow_id,
+                "status": description.status.name,
+            }
+
+        except Exception:
+            pass
+
+    raise HTTPException(
+        status_code=404,
+        detail="Workflow not found"
+    )
