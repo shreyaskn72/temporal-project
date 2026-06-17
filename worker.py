@@ -6,6 +6,13 @@ from temporalio.worker import Worker
 from workflows import HelloWorkflow, say_hello, GoodMorning, say_morning
 import logging
 
+import os
+
+TEMPORAL_HOST = os.getenv(
+    "TEMPORAL_HOST",
+    "localhost:7233"
+)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(name)s %(message)s"
@@ -13,7 +20,7 @@ logging.basicConfig(
 
 async def main():
     hello_client = await Client.connect(
-        "localhost:7233",
+        TEMPORAL_HOST,
         namespace="customer-a"
     )
 
@@ -30,7 +37,7 @@ async def main():
 
 async def main_morning():
     morning_client = await Client.connect(
-        "localhost:7233",
+        TEMPORAL_HOST,
         namespace="customer-b"
     )
 

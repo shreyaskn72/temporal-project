@@ -1,7 +1,7 @@
 # app.py
 
 import uuid
-
+import os
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 
@@ -32,6 +32,11 @@ WORKFLOW_PERMISSIONS = {
     "GoodMorningWorkflow": ["client-b"],
 }
 
+TEMPORAL_HOST = os.getenv(
+    "TEMPORAL_HOST",
+    "localhost:7233"
+)
+
 def validate_workflow_access(
     client_id: str,
     workflow_name: str
@@ -60,7 +65,7 @@ async def startup():
     for namespace in NAMESPACES:
         app.state.namespace_clients[namespace] = (
             await Client.connect(
-                "localhost:7233",
+                TEMPORAL_HOST,
                 namespace=namespace
             )
         )
