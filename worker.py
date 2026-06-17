@@ -4,13 +4,21 @@ from temporalio.client import Client
 from temporalio.worker import Worker
 
 from workflows import HelloWorkflow, say_hello, GoodMorning, say_morning
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s"
+)
 
 async def main():
-    client = await Client.connect("localhost:7233")
+    hello_client = await Client.connect(
+        "localhost:7233",
+        namespace="customer-a"
+    )
 
     worker = Worker(
-        client,
+        hello_client,
         task_queue="hello-task-queue",
         workflows=[HelloWorkflow],
         activities=[say_hello],
@@ -21,10 +29,13 @@ async def main():
     await worker.run()
 
 async def main_morning():
-    client = await Client.connect("localhost:7233")
+    morning_client = await Client.connect(
+        "localhost:7233",
+        namespace="customer-b"
+    )
 
     worker = Worker(
-        client,
+        morning_client,
         task_queue="morning-task-queue",
         workflows=[GoodMorning],
         activities=[say_morning],

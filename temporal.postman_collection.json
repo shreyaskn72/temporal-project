@@ -8,46 +8,11 @@
   },
   "item": [
     {
-      "name": "http://localhost:8000/workflows/hello",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "x-client-id",
-            "value": "clinet-a",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n        \"name\":\"Shreyas K N\"\n      }",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8000/workflows/hello",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "workflows",
-            "hello"
-          ]
-        }
-      },
-      "response": [
+      "name": "1_core_apis",
+      "item": [
         {
-          "name": "http://localhost:8000/workflows/hello",
-          "originalRequest": {
+          "name": "hello_workflow",
+          "request": {
             "method": "POST",
             "header": [
               {
@@ -56,7 +21,7 @@
               },
               {
                 "key": "x-client-id",
-                "value": "clinet-a",
+                "value": "client-a",
                 "type": "text"
               }
             ],
@@ -82,73 +47,144 @@
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
+          "response": [
             {
-              "key": "date",
-              "value": "Thu, 04 Jun 2026 08:19:50 GMT"
+              "name": "http://localhost:8000/workflows/hello",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-client-id",
+                    "value": "clinet-a",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\":\"Shreyas K N\"\n      }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/workflows/hello",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "hello"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 08:19:50 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "202"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"STARTED\",\n    \"workflow_id\": \"hello-29da124a-605d-48d1-ab99-5297e6d726d4\",\n    \"run_id\": \"019e91b7-9ecb-7823-81cb-4c6c321dd288\",\n    \"request_id\": \"7f3d7068-a9e7-4a4d-ba69-e2111180c007\",\n    \"client_id\": \"clinet-a\"\n}"
             },
             {
-              "key": "server",
-              "value": "uvicorn"
-            },
-            {
-              "key": "content-length",
-              "value": "202"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json"
+              "name": "http://localhost:8000/workflows/hello",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-client-id",
+                    "value": "client-b",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\":\"Shreyas K N\"\n      }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/workflows/hello",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "hello"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 08:15:26 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "72"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"detail\": \"Client 'client-b' is not allowed to trigger 'HelloWorkflow'\"\n}"
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"status\": \"STARTED\",\n    \"workflow_id\": \"hello-29da124a-605d-48d1-ab99-5297e6d726d4\",\n    \"run_id\": \"019e91b7-9ecb-7823-81cb-4c6c321dd288\",\n    \"request_id\": \"7f3d7068-a9e7-4a4d-ba69-e2111180c007\",\n    \"client_id\": \"clinet-a\"\n}"
-        }
-      ]
-    },
-    {
-      "name": "http://localhost:8000/workflows/morning",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n        \"name\":\"Nagesh\"\n      }",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8000/workflows/morning",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "workflows",
-            "morning"
           ]
-        }
-      },
-      "response": [
+        },
         {
-          "name": "http://localhost:8000/workflows/morning",
-          "originalRequest": {
+          "name": "morning_workflow",
+          "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "x-client-id",
+                "value": "client-a",
+                "type": "text"
               }
             ],
             "body": {
@@ -173,59 +209,72 @@
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
+          "response": [
             {
-              "key": "date",
-              "value": "Thu, 04 Jun 2026 08:06:09 GMT"
-            },
-            {
-              "key": "server",
-              "value": "uvicorn"
-            },
-            {
-              "key": "content-length",
-              "value": "139"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json"
+              "name": "http://localhost:8000/workflows/morning",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\":\"Nagesh\"\n      }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/workflows/morning",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "morning"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 08:06:09 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "139"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Workflow started\",\n    \"workflow_id\": \"morning-ab35e793-c1b2-4e57-8200-c38baccb3616\",\n    \"run_id\": \"019e91ab-1928-71a2-a7ec-4b2ae7d480ad\"\n}"
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"message\": \"Workflow started\",\n    \"workflow_id\": \"morning-ab35e793-c1b2-4e57-8200-c38baccb3616\",\n    \"run_id\": \"019e91ab-1928-71a2-a7ec-4b2ae7d480ad\"\n}"
-        }
-      ]
-    },
-    {
-      "name": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8000",
-          "path": [
-            "workflows",
-            "status",
-            "hello-a567d397-80c2-4e8a-903a-3af86661f737"
           ]
-        }
-      },
-      "response": [
+        },
         {
-          "name": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
-          "originalRequest": {
+          "name": "workflow_customer_ns_status",
+          "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
+              "raw": "http://localhost:8000/workflows/status/customer-a/hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -234,33 +283,343 @@
               "path": [
                 "workflows",
                 "status",
-                "hello-a567d397-80c2-4e8a-903a-3af86661f737"
+                "customer-a",
+                "hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c"
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
+          "response": [
             {
-              "key": "date",
-              "value": "Thu, 04 Jun 2026 08:22:47 GMT"
-            },
-            {
-              "key": "server",
-              "value": "uvicorn"
-            },
-            {
-              "key": "content-length",
-              "value": "257"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json"
+              "name": "http://localhost:8000/workflows/status/hello-a567d397-80c2-4e8a-903a-3af86661f737",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/workflows/status/customer-a/hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "status",
+                    "customer-a",
+                    "hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 06:55:44 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "281"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"customer\": \"customer-a\",\n    \"workflow_id\": \"hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c\",\n    \"run_id\": \"019e9779-b189-7312-ae15-d1c8436398d1\",\n    \"workflow_type\": \"HelloWorkflow\",\n    \"status\": \"COMPLETED\",\n    \"start_time\": \"2026-06-05T11:09:55.465202+00:00\",\n    \"close_time\": \"2026-06-05T11:09:55.529809+00:00\"\n}"
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"workflow_id\": \"hello-a567d397-80c2-4e8a-903a-3af86661f737\",\n    \"run_id\": \"019e91aa-fae7-7def-91be-aa18bb494a32\",\n    \"workflow_type\": \"HelloWorkflow\",\n    \"status\": \"COMPLETED\",\n    \"start_time\": \"2026-06-04T08:06:02.215914+00:00\",\n    \"close_time\": \"2026-06-04T08:06:02.267414+00:00\"\n}"
+          ]
+        },
+        {
+          "name": "workflow_status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/workflows/status/hello-66a996ec-0750-4521-8c39-88e2eb182704",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "workflows",
+                "status",
+                "hello-66a996ec-0750-4521-8c39-88e2eb182704"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "http://localhost:8000/workflows/status/hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/workflows/status/hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "status",
+                    "hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 06:55:56 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "306"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"namespace\": \"customer-a\",\n    \"customer\": \"customer-a\",\n    \"workflow_id\": \"hello-02d09eeb-3af8-465d-aa58-09c2b53b7f5c\",\n    \"run_id\": \"019e9779-b189-7312-ae15-d1c8436398d1\",\n    \"workflow_type\": \"HelloWorkflow\",\n    \"status\": \"COMPLETED\",\n    \"start_time\": \"2026-06-05T11:09:55.465202+00:00\",\n    \"close_time\": \"2026-06-05T11:09:55.529809+00:00\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2_approval_apis",
+      "item": [
+        {
+          "name": "approval_status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/workflows/hello-f75a1c42-3913-4d72-8089-c460b373bf6e/approval-status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "workflows",
+                "hello-f75a1c42-3913-4d72-8089-c460b373bf6e",
+                "approval-status"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "http://localhost:8000/workflows/hello-66a996ec-0750-4521-8c39-88e2eb182704/approval-status",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/workflows/hello-66a996ec-0750-4521-8c39-88e2eb182704/approval-status",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "hello-66a996ec-0750-4521-8c39-88e2eb182704",
+                    "approval-status"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 13:27:19 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "125"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"workflow_id\": \"hello-66a996ec-0750-4521-8c39-88e2eb182704\",\n    \"namespace\": \"customer-a\",\n    \"approval_state\": \"WAITING_FOR_APPROVAL\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "approve",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/workflows/hello-66a996ec-0750-4521-8c39-88e2eb182704/approve",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "workflows",
+                "hello-66a996ec-0750-4521-8c39-88e2eb182704",
+                "approve"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/workflows/hello-66a996ec-0750-4521-8c39-88e2eb182704/approve",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "hello-66a996ec-0750-4521-8c39-88e2eb182704",
+                    "approve"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 13:28:52 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "105"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"APPROVED\",\n    \"workflow_id\": \"hello-66a996ec-0750-4521-8c39-88e2eb182704\",\n    \"namespace\": \"customer-a\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "reject",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/workflows/hello-f75a1c42-3913-4d72-8089-c460b373bf6e/reject",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "workflows",
+                "hello-f75a1c42-3913-4d72-8089-c460b373bf6e",
+                "reject"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "http://localhost:8000/workflows/hello-f75a1c42-3913-4d72-8089-c460b373bf6e/reject",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/workflows/hello-f75a1c42-3913-4d72-8089-c460b373bf6e/reject",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "workflows",
+                    "hello-f75a1c42-3913-4d72-8089-c460b373bf6e",
+                    "reject"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "date",
+                  "value": "Mon, 08 Jun 2026 13:32:35 GMT"
+                },
+                {
+                  "key": "server",
+                  "value": "uvicorn"
+                },
+                {
+                  "key": "content-length",
+                  "value": "105"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"REJECTED\",\n    \"workflow_id\": \"hello-f75a1c42-3913-4d72-8089-c460b373bf6e\",\n    \"namespace\": \"customer-a\"\n}"
+            }
+          ]
         }
       ]
     }
