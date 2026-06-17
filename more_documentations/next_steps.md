@@ -1,15 +1,25 @@
 Our project has evolved nicely. At this point we have implemented most of the core Temporal concepts:
 
 ✅ Namespaces (`customer-a`, `customer-b`)
+
 ✅ Multiple Workers / Task Queues
+
 ✅ FastAPI Trigger APIs
+
 ✅ Workflow Status APIs
+
 ✅ Activity Retry Policy
+
 ✅ RBAC
+
 ✅ Audit Logging
+
 ✅ Human-in-the-Loop (Signals)
+
 ✅ Workflow Queries
+
 ✅ Approval Timeout (24h)
+
 ✅ Universal Namespace Search API  
 
 If this were a Temporal learning roadmap, we are as of now:
