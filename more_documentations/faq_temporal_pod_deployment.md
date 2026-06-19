@@ -1,3 +1,6 @@
+# In airflow I usually deploy one pod operator to one pod.. is it possible to achieve this in temporal settings? What's the equivalent in temporal deployment?
+
+
 The way you achieve it in Temporal is different from Airflow.
 
 Let's compare.
